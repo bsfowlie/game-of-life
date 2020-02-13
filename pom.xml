@@ -46,8 +46,7 @@
                 <role>architect</role>
                 <role>developer</role>
             </roles>
-            <!-- <timezone>Americas/New_York</timezone> -->
-            <timezone>-5</timezone>
+            <timezone>America/New_York</timezone>
         </developer>
     </developers>
 
