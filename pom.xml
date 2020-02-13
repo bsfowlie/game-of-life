@@ -7,7 +7,7 @@
     <groupId>com.github.bsfowlie</groupId>
     <version>1.0-SNAPSHOT</version>
 
-    <description>An example Java 8 project using Maven, JUnit 5.x and Mockito 3.x</description>
+    <description>An example Java 8 project using Maven, AssertJ 3.x, JUnit 5.x and Mockito 3.x</description>
 
     <url>https://github.com/bsfowlie/game-of-life</url>
 
@@ -54,6 +54,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class>com.github.bsfowlie.gameoflife.Main</main.class>
         <java.version>8</java.version>
+
+        <assertj.version>3.15.0</assertj.version>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
         <mockito.version>3.2.4</mockito.version>
 
@@ -77,6 +79,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
