@@ -3,7 +3,7 @@ package com.github.bsfowlie.gameoflife;
 import org.assertj.core.api.WithAssertions;
 import org.junit.jupiter.api.Test;
 
-class DeadCellShould implements WithAssertions {
+public final class DeadCellShould implements WithAssertions {
 
     private final Cell cell = new Cell(Cell.State.DEAD);
 
