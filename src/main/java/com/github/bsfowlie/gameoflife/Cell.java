@@ -11,6 +11,9 @@ public class Cell {
 
     public State nextState(final int aliveNeighbors) {
 
+        if (aliveNeighbors == 2 || aliveNeighbors == 3) {
+            return State.ALIVE;
+        }
         return State.DEAD;
     }
 
