@@ -7,14 +7,20 @@ public class Cell {
     public Cell(final State state) {
 
         this.state = state;
+
     }
 
     public State nextState(final int aliveNeighbors) {
 
-        if (aliveNeighbors == 2 || aliveNeighbors == 3) {
-            return State.ALIVE;
+        switch (state) {
+            case ALIVE:
+                return (aliveNeighbors == 2 || aliveNeighbors == 3) ? State.ALIVE : State.DEAD;
+            case DEAD:
+                return (aliveNeighbors == 3) ? State.ALIVE : State.DEAD;
+            default:
+                throw new IllegalStateException("Unexpected value: " + state);
         }
-        return State.DEAD;
+
     }
 
     public enum State {
