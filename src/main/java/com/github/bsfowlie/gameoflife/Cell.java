@@ -6,6 +6,7 @@ public class Cell {
 
     public Cell(final State state) {
 
+        if (state == null) { throw new IllegalStateException(); }
         this.state = state;
 
     }
