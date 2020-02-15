@@ -24,6 +24,11 @@ public class Cell {
 
     }
 
+    public State getState() {
+
+        return state;
+    }
+
     public enum State {
         DEAD, ALIVE
     }
