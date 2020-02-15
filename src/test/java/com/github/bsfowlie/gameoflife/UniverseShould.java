@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Universe should")
 public final class UniverseShould implements WithAssertions {
 
-    public static final Cell.State X = Cell.State.ALIVE;
+    public static final Cell X = Cell.LIVE;
 
-    public static final Cell.State O = Cell.State.DEAD;
+    public static final Cell O = Cell.DEAD;
 
     @Test
     @DisplayName("remember its initial state")
-    public void remeberItsInitialState() {
+    public void rememberItsInitialState() {
 
         // given
-        Cell.State[][] original = new Cell.State[][] {
+        Cell[][] original = new Cell[][] {
                 {X, O, X},
                 {O, O, O},
                 {O, X, X},
@@ -26,7 +26,7 @@ public final class UniverseShould implements WithAssertions {
         final Universe universe = new Universe(original);
 
         // then
-        assertThat(universe.getState()).isEqualTo(original);
+        assertThat(universe.getCells()).isEqualTo(original);
 
     }
 }

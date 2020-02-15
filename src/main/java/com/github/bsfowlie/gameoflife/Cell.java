@@ -1,36 +1,20 @@
 package com.github.bsfowlie.gameoflife;
 
-public class Cell {
+public enum Cell {
+    LIVE {
+        public Cell nextStateFor(final int aliveNeighbors) {
 
-    private State state;
-
-    public Cell(final State state) {
-
-        if (state == null) { throw new IllegalStateException(); }
-        this.state = state;
-
-    }
-
-    public State nextState(final int aliveNeighbors) {
-
-        switch (state) {
-            case ALIVE:
-                return (aliveNeighbors == 2 || aliveNeighbors == 3) ? State.ALIVE : State.DEAD;
-            case DEAD:
-                return (aliveNeighbors == 3) ? State.ALIVE : State.DEAD;
-            default:
-                throw new IllegalStateException("Unexpected value: " + state);
+            return (aliveNeighbors == 2 || aliveNeighbors == 3) ? LIVE : DEAD;
         }
 
-    }
+    }, DEAD {
+        public Cell nextStateFor(final int aliveNeighbors) {
 
-    public State getState() {
+            return (aliveNeighbors == 3) ? LIVE : DEAD;
+        }
 
-        return state;
-    }
+    };
 
-    public enum State {
-        DEAD, ALIVE
-    }
+    public abstract Cell nextStateFor(final int aliveNeighbors);
 
 }
