@@ -3,6 +3,7 @@ package com.github.bsfowlie.gameoflife;
 public class Universe {
 
     private final Cell[][] cells;
+
     public Universe(final Cell[][] initial) {
         cells = new Cell[initial.length][];
         for (int row = 0; row < initial.length; row++) {
@@ -24,10 +25,10 @@ public class Universe {
         update(countAliveNeighbors());
     }
 
-    private void update(final int[][] aliveNeighborsFor) {
+    private void update(final int[][] aliveNeighborsAt) {
         for (int row = 0; row < cells.length; row++) {
             for (int col = 0; col < cells[row].length; col++) {
-                cells[row][col] = cells[row][col].nextStateFor(aliveNeighborsFor[row][col]);
+                cells[row][col] = cells[row][col].nextStateFor(aliveNeighborsAt[row][col]);
             }
         }
     }
@@ -43,36 +44,31 @@ public class Universe {
         return aliveNeighbors;
     }
 
-    private int countAliveNeighbors(final int currRow, final int currCol) {
-        final int prevRow = currRow - 1;
-        final int prevCol = currCol - 1;
-        final int nextRow = currRow + 1;
-        final int nextCol = currCol + 1;
-
+    private int countAliveNeighbors(final int row, final int col) {
         int count = 0;
-
-        // row above
-        if (isAlive(prevRow, prevCol)) count++;
-        if (isAlive(prevRow, currCol)) count++;
-        if (isAlive(prevRow, nextCol)) count++;
-
-        // current row
-        if (isAlive(currRow, prevCol)) count++;
-        // (isAlive(currRow, currCol)) is not a neighbor
-        if (isAlive(currRow, nextCol)) count++;
-
-        // row below
-        if (isAlive(nextRow, prevCol)) count++;
-        if (isAlive(nextRow, currCol)) count++;
-        if (isAlive(nextRow, nextCol)) count++;
-
+        count += countNeighborsInRow(row - 1, col);
+        count += countIfNeighborIsAlive(row, col - 1);
+        count += countIfNeighborIsAlive(row, col + 1);
+        count += countNeighborsInRow(row + 1, col);
         return count;
     }
 
-    private boolean isAlive(final int row, final int col) {
-        if (0 <= row && row < cells.length && 0 <= col && col < cells[row].length)
-            return cells[row][col] == Cell.LIVE;
-        return false;
+    private int countNeighborsInRow(final int row, final int currCol) {
+        int count = 0;
+        count += countIfNeighborIsAlive(row, currCol - 1);
+        count += countIfNeighborIsAlive(row, currCol);
+        count += countIfNeighborIsAlive(row, currCol + 1);
+        return count;
+    }
+
+    private int countIfNeighborIsAlive(final int row, final int col) {
+        return getCell(row, col).isAlive() ? 1 : 0;
+    }
+
+    private Cell getCell(final int row, final int col) {
+        return 0 <= row && row < cells.length && 0 <= col && col < cells[row].length
+                ? cells[row][col]
+                : Cell.DEAD;
     }
 
 }
