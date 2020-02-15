@@ -16,7 +16,7 @@ public final class UniverseShould implements WithAssertions {
     public void rememberItsInitialState() {
 
         // given
-        Cell[][] original = new Cell[][] {
+        Cell[][] original = new Cell[][]{
                 {X, O, X},
                 {O, O, O},
                 {O, X, X},
@@ -29,4 +29,44 @@ public final class UniverseShould implements WithAssertions {
         assertThat(universe.getCells()).isEqualTo(original);
 
     }
+
+    @Test
+    @DisplayName("update a cell")
+    public void updateCell() {
+
+        // given
+        final Universe universe = new Universe(new Cell[][]{{X}});
+
+        // when
+        universe.update();
+
+        // then
+        assertThat(universe.getCells()[0][0]).isEqualTo(Cell.DEAD);
+
+    }
+
+    @Test
+    @DisplayName("update all cells")
+    public void updateAllCells() {
+
+        // given
+        final Universe universe = new Universe(new Cell[][]{
+                {O, X, X},
+                {X, O, X},
+                {O, O, X},
+        });
+        final Cell[][] expected = new Cell[][] {
+                {O, X, X},
+                {O, O, X},
+                {O, X, O},
+        };
+
+        // when
+        universe.update();
+
+        // then
+        assertThat(universe.getCells()).isEqualTo(expected);
+
+    }
+
 }
