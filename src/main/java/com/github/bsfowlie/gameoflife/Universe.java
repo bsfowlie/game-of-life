@@ -38,34 +38,34 @@ public class Universe {
         for (int row = 0; row < cells.length; row++) {
             aliveNeighbors[row] = new int[cells[row].length];
             for (int col = 0; col < cells[row].length; col++) {
-                aliveNeighbors[row][col] = countAliveNeighbors(row, col);
+                aliveNeighbors[row][col] = countAliveNeighborsFor(row, col);
             }
         }
         return aliveNeighbors;
     }
 
-    private int countAliveNeighbors(final int row, final int col) {
-        int count = 0;
-        count += countNeighborsInRow(row - 1, col);
-        count += countIfNeighborIsAlive(row, col - 1);
-        count += countIfNeighborIsAlive(row, col + 1);
-        count += countNeighborsInRow(row + 1, col);
-        return count;
+    private int countAliveNeighborsFor(final int currRow, final int currCol) {
+
+        final int prevRow = currRow - 1;
+        final int nextRow = currRow + 1;
+        final int prevCol = currCol - 1;
+        final int nextCol = currCol + 1;
+        return   countNeighborIfAlive(prevRow, prevCol)
+               + countNeighborIfAlive(prevRow, currCol)
+               + countNeighborIfAlive(prevRow, nextCol)
+               + countNeighborIfAlive(currRow, prevCol)
+               //don't count currCell(currRow, currCol)
+               + countNeighborIfAlive(currRow, nextCol)
+               + countNeighborIfAlive(nextRow, prevCol)
+               + countNeighborIfAlive(nextRow, currCol)
+               + countNeighborIfAlive(nextRow, nextCol);
     }
 
-    private int countNeighborsInRow(final int row, final int currCol) {
-        int count = 0;
-        count += countIfNeighborIsAlive(row, currCol - 1);
-        count += countIfNeighborIsAlive(row, currCol);
-        count += countIfNeighborIsAlive(row, currCol + 1);
-        return count;
+    private int countNeighborIfAlive(final int neighboringRow, final int neighboringCol) {
+        return cell(neighboringRow, neighboringCol).isAlive() ? 1 : 0;
     }
 
-    private int countIfNeighborIsAlive(final int row, final int col) {
-        return getCell(row, col).isAlive() ? 1 : 0;
-    }
-
-    private Cell getCell(final int row, final int col) {
+    private Cell cell(final int row, final int col) {
         return 0 <= row && row < cells.length && 0 <= col && col < cells[row].length
                 ? cells[row][col]
                 : Cell.DEAD;
