@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <name>game-of-life</name>
+    <name>Game Of Life</name>
     <artifactId>game-of-life</artifactId>
     <groupId>com.github.bsfowlie</groupId>
     <version>1.0-SNAPSHOT</version>
@@ -53,7 +55,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.class>com.github.bsfowlie.gameoflife.Main</main.class>
-        <java.version>8</java.version>
+        <jdk.release>8</jdk.release>
+        <jdk.version>1.8</jdk.version>
 
         <assertj.version>3.15.0</assertj.version>
         <junit.jupiter.version>5.6.0</junit.jupiter.version>
@@ -77,6 +80,29 @@
         <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
         <codehaus.versions.maven.plugin.version>2.7</codehaus.versions.maven.plugin.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>jdk13</id>
+            <activation>
+                <jdk>13</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.plugin.version}</version>
+                        <configuration>
+                            <release>${jdk.release}</release>
+                            <source>${jdk.version}</source>
+                            <target>${jdk.version}</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -196,8 +222,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
